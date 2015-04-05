@@ -1,12 +1,29 @@
-desc 'Publishing the website via scp'
-task :deploy do
+desc 'Install the site locally, node and ruby packages'
+task :install do
+	puts 'Download all packages'
+  sh 'npm install'
+  sh 'bundle install'
+	Rake::Task['build'].execute
+	puts 'Installation complete!'
+end
+desc 'Build the whole site and make it ready for deploy'
+task :build do
+	puts 'Build the site up'
   puts 'Making it grunt!'
   sh "grunt"
   puts 'Rebuild all the stuff what is needed with Jekyll'
   sh 'jekyll build'
+end
+desc 'Publishing the website via scp'
+task :deploy do
+	Rake::Task['build'].execute
   Rake::Task['delete'].execute
+	Rake::Task['publish'].execute
+end
+desc 'Publish the website'
+task :publish do
   puts 'Publishing your website, let\'s see what happens...'
-  sh= "scp -r _site/* #{ENV['KRETTISDOTNL_USER']}@#{ENV['KRETTISDOTNL_SERVER']}:#{ENV['KRETTISDOTNL_PATH']}"
+  sh "scp -r _site/* #{ENV['KRETTISDOTNL_USER']}@#{ENV['KRETTISDOTNL_SERVER']}:#{ENV['KRETTISDOTNL_PATH']}"
   puts 'Website is published!'
 end
 desc 'Delete all on the website'
