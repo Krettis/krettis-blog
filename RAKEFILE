@@ -1,0 +1,17 @@
+desc 'Publishing the website via scp'
+task :deploy do
+  puts 'Making it grunt!'
+  sh "grunt"
+  puts 'Rebuild all the stuff what is needed with Jekyll'
+  sh 'jekyll build'
+  Rake::Task['delete'].execute
+  puts 'Publishing your website, let\'s see what happens...'
+  sh= "scp -r _site/* #{ENV['KRETTISDOTNL_USER']}@#{ENV['KRETTISDOTNL_SERVER']}:#{ENV['KRETTISDOTNL_PATH']}"
+  puts 'Website is published!'
+end
+desc 'Delete all on the website'
+task :delete do
+ puts 'Starting to delete'
+ sh "ssh #{ENV['KRETTISDOTNL_USER']}@#{ENV['KRETTISDOTNL_SERVER']} \"cd #{ENV['KRETTISDOTNL_PATH']} && rm -rf *\""
+ puts 'Everything is deleted. Hurray!'
+end
