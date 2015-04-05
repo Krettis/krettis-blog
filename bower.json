@@ -1,0 +1,26 @@
+{
+  "name": "jekyll-krettis",
+  "version": "1",
+  "homepage": "http://krettis.nl",
+  "authors": [
+    "Krettis <krettis@gmail.com>"
+  ],
+  "description": "homepage of krettis",
+  "keywords": [
+    "coding",
+    "krettis",
+    "testing",
+    "review"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "picturefill": "~2.3.0"
+  }
+}

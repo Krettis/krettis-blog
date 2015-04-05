@@ -10,6 +10,7 @@ module.exports = function(grunt) {
         'Gruntfile.js',
         'assets/js/*.js',
         'assets/js/plugins/*.js',
+        '!assets/vendor/js/**/*.js',
         '!assets/js/scripts.min.js'
       ]
     },
@@ -18,7 +19,8 @@ module.exports = function(grunt) {
         files: {
           'assets/js/scripts.min.js': [
             'assets/js/plugins/*.js',
-            'assets/js/_*.js'
+            'assets/js/_*.js',
+            'assets/vendor/js/**/*.js',
           ]
         }
       }
@@ -59,10 +61,21 @@ module.exports = function(grunt) {
       dist: [
         'assets/js/scripts.min.js'
       ]
+    },
+    bower: {
+      dev: {
+        dest: 'assets/vendor',
+        js_dest: 'assets/vendor/js',
+        options: {
+          expand: true
+        }
+      }
     }
+
   });
 
   // Load tasks
+	grunt.loadNpmTasks('grunt-bower');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -72,6 +85,7 @@ module.exports = function(grunt) {
 
   // Register tasks
   grunt.registerTask('default', [
+    'bower',
     'clean',
     'uglify',
     'imagemin',
